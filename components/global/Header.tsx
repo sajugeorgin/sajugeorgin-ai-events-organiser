@@ -5,10 +5,13 @@ import Link from "next/link";
 import { ModeToggle } from "../theme/ModeToggle";
 import { SignUpButton, UserButton } from "@clerk/nextjs";
 import { Button } from "../ui/button";
-import { Authenticated, Unauthenticated, AuthLoading } from "convex/react";
+import { Authenticated, Unauthenticated } from "convex/react";
 import { BarLoader } from "react-spinners";
+import { useStoreUserEffect } from "@/hooks/convex/useStoreUserEffect";
 
 export default function Header() {
+  const { isLoading } = useStoreUserEffect();
+
   return (
     <nav className="sticky top-0 z-50 border-b bg-background border-white/10 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -52,9 +55,11 @@ export default function Header() {
       </div>
 
       {/* In the process of authenticating, display a <BarLoader/> */}
-      <AuthLoading>
-        <BarLoader width="100%" color="#a855f7" />
-      </AuthLoading>
+      {isLoading && (
+        <div>
+          <BarLoader width="100%" color="#a855f7" />
+        </div>
+      )}
     </nav>
   );
 }
