@@ -53,7 +53,7 @@ export default defineSchema({
     category: v.string(),
     tags: v.array(v.string()),
 
-    // Date % Time
+    // Date & Time
     startDate: v.number(),
     endDate: v.number(),
     timeZone: v.string(),
