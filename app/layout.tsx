@@ -41,8 +41,8 @@ export default function RootLayout({
                 <main className="relative flex-1">
                   {/* Glow Effects */}
                   <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-                    <div className="absolute top-0 left-1/4 w-72 h-72 bg-pink-600/20 rounded-full blur-3xl" />
-                    <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl" />
+                    <div className="absolute top-0 left-1/4 w-72 h-72 bg-pink-600/30 rounded-full blur-3xl" />
+                    <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-600/30 rounded-full blur-3xl" />
                   </div>
 
                   <div className="relative container mx-auto px-4 pt-10">
