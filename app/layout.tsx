@@ -33,7 +33,7 @@ export default function RootLayout({
             }}
           >
             <ConvexClientProvider>
-              <div className="min-h-screen flex flex-col">
+              <div className="relative min-h-screen flex flex-col">
                 {/* Header Component */}
                 <Header />
 
