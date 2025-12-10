@@ -43,6 +43,7 @@ const LandingPage = () => {
             height={700}
             className="w-full h-auto hover:scale-105 duration-300 transition-all"
             priority
+            unoptimized
           />
         </div>
       </div>
