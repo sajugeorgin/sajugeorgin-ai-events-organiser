@@ -23,12 +23,14 @@ export default defineSchema({
     // Onboarding completed
     hasCompletedOnboarding: v.boolean(),
 
-    // Location Object
-    location: v.object({
-      city: v.optional(v.string()),
-      state: v.optional(v.string()),
-      country: v.optional(v.string()),
-    }),
+    // Attendee Location (from onboarding)
+    location: v.optional(
+      v.object({
+        city: v.string(),
+        state: v.string(),
+        country: v.string(),
+      })
+    ),
 
     interests: v.optional(v.array(v.string())), // Interests will be an array of strings
 

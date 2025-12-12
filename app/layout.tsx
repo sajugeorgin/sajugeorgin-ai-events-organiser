@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Header from "@/components/global/Header";
 import Footer from "@/components/global/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Event Pilot",
@@ -38,6 +39,7 @@ export default function RootLayout({
                 <Header />
 
                 {/* Main Children */}
+
                 <main className="relative flex-1">
                   {/* Glow Effects */}
                   <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
@@ -52,6 +54,8 @@ export default function RootLayout({
 
                 {/* Footer Component */}
                 <Footer />
+
+                <Toaster position="bottom-right" richColors />
               </div>
             </ConvexClientProvider>
           </ClerkProvider>

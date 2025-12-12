@@ -1,5 +1,9 @@
 import { OptionalRestArgsOrSkip, useMutation, useQuery } from "convex/react";
-import { FunctionReference, OptionalRestArgs } from "convex/server";
+import {
+  FunctionReference,
+  FunctionReturnType,
+  OptionalRestArgs,
+} from "convex/server";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -8,10 +12,14 @@ import { toast } from "sonner";
 export function useConvexQuery<Query extends FunctionReference<"query">>(
   query: Query,
   ...args: OptionalRestArgsOrSkip<Query>
-) {
+): {
+  data: FunctionReturnType<Query> | undefined;
+  isLoading: boolean;
+  error: Error | null;
+} {
   const result = useQuery(query, ...args);
 
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
