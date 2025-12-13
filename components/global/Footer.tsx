@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="w-full border-t border-white/10">
       <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 items-end md:flex-row md:justify-between">
         <p className="text-sm">
-          © {year} EventPilot. All rights reserved.
+          © {year} Eventive. All rights reserved.
         </p>
 
         <p className="text-xs text-gray-500">

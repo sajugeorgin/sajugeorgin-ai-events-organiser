@@ -269,7 +269,7 @@ function generateSlug(title: string) {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "") +
-    `-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`
+    `-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`
   );
 }
 
