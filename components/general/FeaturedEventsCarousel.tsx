@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -8,9 +10,8 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { IExploreEvent } from "@/types/events";
+import { Event } from "@/types/events";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Calendar, MapPin, Ticket, Users } from "lucide-react";
 import { extractUrl } from "@/lib/utils";
 import { Badge } from "../ui/badge";
@@ -18,19 +19,17 @@ import Image from "next/image";
 import { format } from "date-fns";
 
 type FeaturedEventsCarouselProps = {
-  featuredEvents: IExploreEvent[];
-  loadingEvents?: boolean;
+  featuredEvents: Event[];
+  handleFeaturedEventClick: (eventSlug: string) => void;
 };
 
 const FeaturedEventsCarousel = ({
   featuredEvents,
+  handleFeaturedEventClick,
 }: FeaturedEventsCarouselProps) => {
   // LISTEN TO EVENTS ON THE CAROUSEL USING THE API INSTANCE FROM SETAPI
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-
-  // ROUTER FOR ROUTING (IN EVENT HANDLER)
-  const router = useRouter();
 
   // CAROUSEL AUTOPLAY PLUGIN
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
@@ -48,11 +47,6 @@ const FeaturedEventsCarousel = ({
     });
   }, [api]);
 
-  // HANDLE EVENT CLICK
-  const handleEventClick = (slug: string) => {
-    router.push(`/explore/${slug}`);
-  };
-
   return (
     <div className="w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <Carousel
@@ -68,7 +62,7 @@ const FeaturedEventsCarousel = ({
             <CarouselItem key={event._id}>
               <div
                 className="group cursor-pointer relative overflow-hidden rounded-2xl md:rounded-3xl"
-                onClick={() => handleEventClick(event.slug)}
+                onClick={() => handleFeaturedEventClick(event.slug)}
               >
                 {/* DISPLAY EVENT COVER IMAGE - POSITIONED ABSOLUTELY AS BACKGROUND */}
                 {event.coverImage ? (

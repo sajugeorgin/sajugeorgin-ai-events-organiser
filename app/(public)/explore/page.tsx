@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { api } from "@/convex/_generated/api";
@@ -6,7 +5,10 @@ import { useConvexQuery } from "@/hooks/convex/useConvexQuery";
 import FeaturedEventsCarousel from "@/components/general/FeaturedEventsCarousel";
 import Events from "@/components/general/Events";
 import LoadingUI from "@/components/loading/LoadingUI";
-import { Id } from "@/convex/_generated/dataModel";
+import Categories from "@/components/general/Categories";
+import { CATEGORIES } from "@/lib/data";
+import { useRouter } from "next/navigation";
+import CreateEventPrompt from "@/components/general/CreateEventPrompt";
 
 // USE THE CUSTOM QUERY HOOK WHICH I BUILT ON CONVEX USEQEURY
 // NOW ALSO PROVIDES ADDITONAL FUNCTIONALITY - ISLOADING AND ERROR STATES
@@ -39,6 +41,27 @@ const ExplorePage = () => {
     api.explore.getCategoryCounts
   );
 
+  // ROUTER FOR NAVIGATION
+  const router = useRouter();
+
+  // HANDLE EVENT CLICK
+  const handleEventClick = (eventSlug: string) => {
+    router.push(`/events/${eventSlug}`);
+  };
+
+  // HANDLE CATEGORY CLICK
+  const handleCategoryClick = (categoryId: string) => {
+    router.push(`/events/${categoryId}`);
+  };
+
+  // CATEGORIES
+  const categories = CATEGORIES.map((cat) => {
+    return {
+      ...cat,
+      count: categoryCounts?.[cat.id] || 0,
+    };
+  });
+
   // DISPLAY CUSTOM LOADING UI WHEN THE CONVEX APIS ARE LOADING
   const isLoadingConvexApis =
     loadingFeaturedEvents || loadingLocalEvents || loadingPopularEvents;
@@ -58,29 +81,54 @@ const ExplorePage = () => {
         <h1 className="text-5xl md:text-6xl font-bold mb-4">Discover Events</h1>
         <p className="text-base text-muted-foreground max-w-3xl mx-auto">
           Explore featured events, find what&apos;s happening locally, or browse
-          events across the UK
+          popular events across the {currentUser?.location?.country || "UK"}
         </p>
       </div>
 
       {/* FEATURED EVENTS CAROUSEL */}
       {featuredEvents && featuredEvents.length > 0 && (
         <div className="my-10 flex items-center justify-center">
-          <FeaturedEventsCarousel featuredEvents={featuredEvents} />
+          <FeaturedEventsCarousel
+            featuredEvents={featuredEvents}
+            handleFeaturedEventClick={handleEventClick}
+          />
         </div>
       )}
 
       {/* LOCAL EVENTS */}
       {localEvents && localEvents.length > 0 && (
         <div>
-          <Events events={localEvents} user={currentUser} />
+          <Events
+            events={localEvents}
+            eventType="local"
+            user={currentUser}
+            handleEventClick={handleEventClick}
+          />
         </div>
       )}
 
       {/* BROWSE BY CATEGORY */}
+      <div>
+        <Categories
+          categories={categories}
+          handleCategoryClick={handleCategoryClick}
+        />
+      </div>
 
       {/* POPULAR EVENTS ACROSS THE UK */}
+      {popularEvents && popularEvents.length > 0 && (
+        <div>
+          <Events
+            events={popularEvents}
+            eventType="popular"
+            showUserActions
+            handleEventClick={handleEventClick}
+          />
+        </div>
+      )}
 
-      {/* EMPTY STATE - NO EVENTS :( */}
+      {/* EMPTY STATE - NO EVENTS ACROSS ALL CONVEX API CALLS */}
+      {true && <CreateEventPrompt />}
 
       <section></section>
       <div></div>
