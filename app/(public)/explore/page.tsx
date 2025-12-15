@@ -4,13 +4,16 @@
 import { api } from "@/convex/_generated/api";
 import { useConvexQuery } from "@/hooks/convex/useConvexQuery";
 import FeaturedEventsCarousel from "@/components/general/FeaturedEventsCarousel";
+import Events from "@/components/general/Events";
+import LoadingUI from "@/components/loading/LoadingUI";
+import { Id } from "@/convex/_generated/dataModel";
 
 // USE THE CUSTOM QUERY HOOK WHICH I BUILT ON CONVEX USEQEURY
 // NOW ALSO PROVIDES ADDITONAL FUNCTIONALITY - ISLOADING AND ERROR STATES
 
 // CALL THE EXPLORE API'S CREATED IN 'CONVEX'
 const ExplorePage = () => {
-  // FETCH CURRENT USER FOR LOCATION
+  // FETCH CURRENT USER
   const { data: currentUser } = useConvexQuery(api.users.getCurrentUser);
 
   // FETCH FEATURED EVENTS AND LOADING STATE
@@ -36,6 +39,18 @@ const ExplorePage = () => {
     api.explore.getCategoryCounts
   );
 
+  // DISPLAY CUSTOM LOADING UI WHEN THE CONVEX APIS ARE LOADING
+  const isLoadingConvexApis =
+    loadingFeaturedEvents || loadingLocalEvents || loadingPopularEvents;
+
+  if (isLoadingConvexApis) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingUI />
+      </div>
+    );
+  }
+
   return (
     <>
       {/* TOP TEXT */}
@@ -45,7 +60,6 @@ const ExplorePage = () => {
           Explore featured events, find what&apos;s happening locally, or browse
           events across the UK
         </p>
-        {/* <pre>{JSON.stringify(categoryCounts, null, 2)}</pre> */}
       </div>
 
       {/* FEATURED EVENTS CAROUSEL */}
@@ -56,6 +70,11 @@ const ExplorePage = () => {
       )}
 
       {/* LOCAL EVENTS */}
+      {localEvents && localEvents.length > 0 && (
+        <div>
+          <Events events={localEvents} user={currentUser} />
+        </div>
+      )}
 
       {/* BROWSE BY CATEGORY */}
 

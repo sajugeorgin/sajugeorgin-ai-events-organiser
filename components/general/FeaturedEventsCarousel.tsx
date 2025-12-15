@@ -63,9 +63,9 @@ const FeaturedEventsCarousel = ({
         opts={{ align: "center", loop: true }}
         className="w-full rounded-2xl"
       >
-        <CarouselContent className="-ml-2 md:-ml-4">
+        <CarouselContent>
           {featuredEvents?.map((event) => (
-            <CarouselItem key={event._id} className="pl-2 md:pl-4">
+            <CarouselItem key={event._id}>
               <div
                 className="group cursor-pointer relative overflow-hidden rounded-2xl md:rounded-3xl"
                 onClick={() => handleEventClick(event.slug)}
@@ -105,7 +105,7 @@ const FeaturedEventsCarousel = ({
                         </Badge>
 
                         {/* EVENT CATEGORY */}
-                        <Badge className="backdrop-blur-xl bg-white/10 border border-white/20 px-3 md:px-4 py-1 md:py-1.5 text-xs font-medium text-white hover:bg-white/15 transition-colors">
+                        <Badge className="backdrop-blur-sm bg-white/10 border border-white/30 px-3 md:px-4 py-1 md:py-1.5 text-xs font-medium text-white hover:bg-white/15 transition-colors">
                           {event.category}
                         </Badge>
                       </div>

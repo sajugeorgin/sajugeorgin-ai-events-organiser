@@ -11,3 +11,13 @@ export function extractUrl(input: string): string {
   const urls = input.match(/https?:\/\/[^\s)"\]]+/g);
   return urls ? urls[urls.length - 1] : input;
 }
+
+// GENERATE LOCATION SLUG
+export function createLocationSlug(city: string, state: string) {
+  if (!city || !state) return "";
+
+  const citySlug = city.toLowerCase().replace(/\s+/g, "-");
+  const stateSlug = state.toLowerCase().replace(/\s+/g, "-");
+
+  return `${citySlug}-${stateSlug}`;
+}

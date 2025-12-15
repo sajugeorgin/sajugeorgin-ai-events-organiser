@@ -1,6 +1,6 @@
 import { Id } from "@/convex/_generated/dataModel";
 
-export interface IExploreEvent {
+export interface Event {
   _id: Id<"events">;
   _creationTime: number;
   address?: string | undefined;
