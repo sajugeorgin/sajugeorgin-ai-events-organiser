@@ -1,6 +1,6 @@
 import { Event } from "@/types/events";
-import { Calendar, MapPin, Star, Trash2, Users } from "lucide-react";
-import { extractUrl } from "@/lib/utils";
+import { Calendar, Eye, MapPin, Star, Trash2, Users } from "lucide-react";
+import { cn, extractUrl } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
@@ -14,8 +14,10 @@ interface EventsProps {
   events: Event[];
   handleEventClick: (eventSlug: string) => void;
   eventType: "local" | "popular";
+  showHeader?: boolean;
   user?: User | null | undefined;
   onDelete?: (eventId: Id<"events">) => void;
+  handleViewAllEventsNearMe?: (city: string, state: string) => void;
   showUserActions?: boolean;
 }
 
@@ -23,39 +25,67 @@ const Events = ({
   events,
   user,
   eventType,
+  showHeader = true,
   onDelete,
   handleEventClick,
+  handleViewAllEventsNearMe,
   showUserActions,
 }: EventsProps) => {
   // GET THE AUTHENTICATED USER'S LOCATION
   const city = user?.location?.city || "London";
+  const state = user?.location?.state || "England";
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      className={cn(
+        "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+        showHeader === false && "mt-10"
+      )}
+    >
       {/* SECTION HEADER */}
-      <div className="mb-8 md:mb-12">
-        <div className="flex items-center gap-3 mb-1">
-          <div
-            className={`flex items-center justify-center size-10 rounded-lg bg-linear-to-br ${eventType === "local" ? "from-red-200 to-red-500" : "from-blue-200 to-cyan-600"}`}
-          >
-            {eventType === "local" ? (
-              <MapPin className="size-5" />
-            ) : (
-              <Star className="size-5" />
-            )}
+      {showHeader && (
+        <div className="mb-8 md:mb-12">
+          <div className="relative flex items-center gap-3 mb-1">
+            <div
+              className={`flex items-center justify-center size-10 rounded-lg bg-linear-to-br ${eventType === "local" ? "from-red-200 to-red-500" : "from-blue-200 to-cyan-600"}`}
+            >
+              {eventType === "local" ? (
+                <MapPin className="size-5" />
+              ) : (
+                <Star className="size-5" />
+              )}
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-bold">
+              {eventType === "local" ? "Events Near You" : "Popular Events"}
+            </h2>
+
+            <div className="absolute right-0">
+              <Button
+                variant="outline"
+                className="cursor-pointer hover:scale-105 duration-300 transition-all"
+                onClick={() => {
+                  // HANDLE UNDEFINED CASE
+                  if (!handleViewAllEventsNearMe || !city || !state) return;
+
+                  handleViewAllEventsNearMe(city, state);
+                }}
+                disabled={!handleViewAllEventsNearMe || !city || !state}
+              >
+                <div className="hidden sm:flex">View All</div>
+
+                <Eye />
+              </Button>
+            </div>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold">
-            {eventType === "local" ? "Events Near You" : "Popular Events"}
-          </h2>
+          <p className="text-sm md:text-base text-muted-foreground ml-[55px]">
+            {eventType === "local" && city
+              ? `Discover what's happening in ${city}`
+              : "These events are currently trending on Eventive"}
+          </p>
         </div>
-
-        <p className="text-sm md:text-base text-muted-foreground ml-[55px]">
-          {eventType === "local" && city
-            ? `Discover what's happening in ${city}`
-            : "These events are currently trending on Eventive"}
-        </p>
-      </div>
+      )}
 
       {/* EVENTS GRID FOR LOCAL EVENTS */}
       {eventType === "local" && (
@@ -75,6 +105,7 @@ const Events = ({
                         src={extractUrl(event.coverImage)}
                         alt={event.title}
                         fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                         priority
                         className="object-cover hover:scale-105 duration-300 transition-all"
                       />
@@ -218,6 +249,7 @@ const Events = ({
                           src={extractUrl(event.coverImage)}
                           alt={event.title}
                           fill
+                          sizes="(min-width: 1024px) 560px, (min-width: 640px) 224px, 100vw"
                           priority
                           className="object-cover hover:scale-105 duration-300 transition-all"
                         />

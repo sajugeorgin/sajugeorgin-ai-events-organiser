@@ -9,6 +9,7 @@ import Categories from "@/components/general/Categories";
 import { CATEGORIES } from "@/lib/data";
 import { useRouter } from "next/navigation";
 import CreateEventPrompt from "@/components/general/CreateEventPrompt";
+import { createLocationSlug } from "@/lib/utils";
 
 // USE THE CUSTOM QUERY HOOK WHICH I BUILT ON CONVEX USEQEURY
 // NOW ALSO PROVIDES ADDITONAL FUNCTIONALITY - ISLOADING AND ERROR STATES
@@ -22,13 +23,13 @@ const ExplorePage = () => {
   const { data: featuredEvents, isLoading: loadingFeaturedEvents } =
     useConvexQuery(api.explore.getFeaturedEvents, { limit: 3 });
 
-  // FETCH EVENTS BY LOCATION (CITY/ STATE)
+  // FETCH EVENTS BY LOCATION (CITY-STATE)
   const { data: localEvents, isLoading: loadingLocalEvents } = useConvexQuery(
     api.explore.getEventsByLocation,
     {
       city: currentUser?.location?.city || "London",
-      state: currentUser?.location?.state || "Greater London",
-      limit: 4,
+      state: currentUser?.location?.state || "England",
+      limit: 3,
     }
   );
 
@@ -52,6 +53,13 @@ const ExplorePage = () => {
   // HANDLE CATEGORY CLICK
   const handleCategoryClick = (categoryId: string) => {
     router.push(`/events/${categoryId}`);
+  };
+
+  // HANDLE VIEW ALL LOCAL EVENTS CLICK
+  const handleViewAllEventsNearMe = (city: string, state: string) => {
+    const slug = createLocationSlug(city, state);
+
+    router.push(`/explore/${slug}`);
   };
 
   // CATEGORIES
@@ -103,6 +111,7 @@ const ExplorePage = () => {
             eventType="local"
             user={currentUser}
             handleEventClick={handleEventClick}
+            handleViewAllEventsNearMe={handleViewAllEventsNearMe}
           />
         </div>
       )}
@@ -128,10 +137,12 @@ const ExplorePage = () => {
       )}
 
       {/* EMPTY STATE - NO EVENTS ACROSS ALL CONVEX API CALLS */}
-      {true && <CreateEventPrompt />}
-
-      <section></section>
-      <div></div>
+      {!loadingFeaturedEvents &&
+        !loadingLocalEvents &&
+        !loadingPopularEvents &&
+        (!featuredEvents || featuredEvents.length === 0) &&
+        (!localEvents || localEvents.length === 0) &&
+        (!popularEvents || popularEvents.length === 0) && <CreateEventPrompt />}
     </>
   );
 };

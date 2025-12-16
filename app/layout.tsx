@@ -55,7 +55,7 @@ export default function RootLayout({
                 {/* Footer Component */}
                 <Footer />
 
-                <Toaster position="bottom-right" richColors />
+                <Toaster position="top-center" richColors />
               </div>
             </ConvexClientProvider>
           </ClerkProvider>

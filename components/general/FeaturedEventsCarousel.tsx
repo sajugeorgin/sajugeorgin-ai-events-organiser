@@ -71,9 +71,9 @@ const FeaturedEventsCarousel = ({
                       src={extractUrl(event.coverImage)}
                       alt={event.title}
                       fill
+                      sizes=""
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                       priority
-                      quality={100}
                     />
 
                     {/* DARKEN THE IMAGE SO THAT USERS CAN SEE OVERLAYED TEXT/ INFORMATION */}

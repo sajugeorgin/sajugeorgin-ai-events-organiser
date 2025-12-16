@@ -97,7 +97,7 @@ export const getPopularEvents = query({
 });
 
 // API FOR GETTING EVENTS BY CATEGORY
-export const getEventsByCategorgy = query({
+export const getEventsByCategory = query({
   args: {
     category: v.string(),
     limit: v.optional(v.number()),
