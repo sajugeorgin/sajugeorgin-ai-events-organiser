@@ -9,7 +9,7 @@ const SAMPLE_EVENTS = [
     category: "tech",
     tags: ["tech", "react", "javascript", "frontend"],
     city: "London",
-    state: "Greater London",
+    state: "England",
     venue:
       "[https://maps.google.com/?q=WeWork+Moorgate+London](https://maps.google.com/?q=WeWork+Moorgate+London)",
     address: "WeWork Moorgate, 131 Finsbury Pavement, London EC2A 1NT",
@@ -43,7 +43,7 @@ const SAMPLE_EVENTS = [
     category: "music",
     tags: ["music", "indie", "acoustic", "live"],
     city: "London",
-    state: "Greater London",
+    state: "England",
     venue:
       "[https://maps.google.com/?q=Union+Chapel+London](https://maps.google.com/?q=Union+Chapel+London)",
     address: "Union Chapel, 19b Compton Terrace, London N1 2UN",
@@ -61,7 +61,7 @@ const SAMPLE_EVENTS = [
     category: "business",
     tags: ["business", "networking", "startup", "entrepreneurship"],
     city: "London",
-    state: "Greater London",
+    state: "England",
     venue:
       "[https://maps.google.com/?q=Level39+London](https://maps.google.com/?q=Level39+London)",
     address: "Level39, One Canada Square, Canary Wharf, London E14 5AB",
@@ -79,7 +79,7 @@ const SAMPLE_EVENTS = [
     category: "art",
     tags: ["art", "photography", "culture", "walking-tour"],
     city: "London",
-    state: "Greater London",
+    state: "England",
     venue:
       "[https://maps.google.com/?q=Borough+Market+London](https://maps.google.com/?q=Borough+Market+London)",
     address: "Borough Market, 8 Southwark St, London SE1 1TL",
@@ -168,7 +168,7 @@ const SAMPLE_EVENTS = [
     category: "gaming",
     tags: ["gaming", "esports", "valorant", "tournament"],
     city: "London",
-    state: "Greater London",
+    state: "England",
     venue:
       "[https://maps.google.com/?q=Platform+Shoreditch+London](https://maps.google.com/?q=Platform+Shoreditch+London)",
     address: "Platform, 2 Finsbury Ave, London EC2M 2PA",
@@ -186,7 +186,7 @@ const SAMPLE_EVENTS = [
     category: "networking",
     tags: ["networking", "women-in-tech", "leadership", "career"],
     city: "London",
-    state: "Greater London",
+    state: "England",
     venue:
       "[https://maps.google.com/?q=Google+for+Startups+Campus+London](https://maps.google.com/?q=Google+for+Startups+Campus+London)",
     address: "Google for Startups Campus, 4-5 Bonhill St, London EC2A 4BX",
