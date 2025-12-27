@@ -6,14 +6,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// TO EXTRACT A USABLE URL FROM EVENT.COVERIMAGE
+// 1. TO EXTRACT A USABLE URL FROM EVENT.COVERIMAGE
 export function extractUrl(input: string): string {
   // Match the last occurrence of a complete URL
   const urls = input.match(/https?:\/\/[^\s)"\]]+/g);
   return urls ? urls[urls.length - 1] : input;
 }
 
-// GENERATE LOCATION SLUG
+// 2. GENERATE LOCATION SLUG
 export function createLocationSlug(city: string, state: string) {
   if (!city || !state) return "";
 
@@ -23,7 +23,7 @@ export function createLocationSlug(city: string, state: string) {
   return `${citySlug}-${stateSlug}`;
 }
 
-// PARSE LOCATION SLUG
+// 3. PARSE LOCATION SLUG
 export function parseLocationSlug(slug: string) {
   if (!slug || typeof slug !== "string") {
     return { city: null, state: null, isValid: false };

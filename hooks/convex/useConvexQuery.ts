@@ -5,7 +5,6 @@ import {
   OptionalRestArgs,
 } from "convex/server";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 // FOR ALL TYPESCRIPT TYPES I REFERRED TO THE USEQUERY & USEMUTATION HOOKS PROVIDED BY CONVEX
 
@@ -20,7 +19,7 @@ export function useConvexQuery<Query extends FunctionReference<"query">>(
   const result = useQuery(query, ...args);
 
   const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -36,7 +35,6 @@ export function useConvexQuery<Query extends FunctionReference<"query">>(
             ? err
             : new Error("Something went wrong with the query.");
         setError(error);
-        toast.error(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -52,7 +50,7 @@ export function useConvexMutation<
   const mutationFunction = useMutation(mutation);
 
   const [data, setData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   const mutate = async (...args: OptionalRestArgs<Mutation>) => {
@@ -69,7 +67,6 @@ export function useConvexMutation<
           ? err
           : new Error("Something went wrong with the mutation.");
       setError(error);
-      toast.error(error.message);
     } finally {
       setIsLoading(false);
     }
