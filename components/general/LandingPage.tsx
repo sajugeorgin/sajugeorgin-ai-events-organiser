@@ -27,7 +27,7 @@ const LandingPage = () => {
           <Link href="/explore">
             <Button
               size="lg"
-              className="rounded-full text-lg hover:scale-103 duration-300 transition-all cursor-pointer"
+              className="rounded-full text-lg cursor-pointer hover:bg-blue-700"
             >
               Get Started
             </Button>

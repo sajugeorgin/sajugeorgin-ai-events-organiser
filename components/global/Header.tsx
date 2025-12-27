@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import Image from "next/image";
@@ -10,11 +11,20 @@ import { BarLoader } from "react-spinners";
 import { useStoreUserEffect } from "@/hooks/convex/useStoreUserEffect";
 import { useState } from "react";
 import { Building, Plus, Ticket } from "lucide-react";
+import OnboardingModal from "../general/OnboardingModal";
+import { useOnboarding } from "@/hooks/useOnboarding";
+import { toast } from "sonner";
 
 export default function Header() {
   const { isLoading } = useStoreUserEffect();
 
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+
+  // USER MUST BE LOGGED IN FOR ONBOARDING HOOK TO WORK
+  // IF USER CLICKS EXPLORE THEN ONBOARDING MODAL RENDERS
+  // IF USER SKIPS (CLOSES OUT) THEN THEY ARE REDIRECTED TO THE HOME PAGE
+  const { showOnboarding, handleOnboardingComplete, handleOnboardingSkip } =
+    useOnboarding();
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-background border-white/10 backdrop-blur">
@@ -72,7 +82,7 @@ export default function Header() {
               variant="default"
               className="cursor-pointer hover:scale-103 duration-300 transition-all"
               size="sm"
-              onClick={() => setShowUpgradeModal}
+              onClick={() => setShowUpgradeModal(true)}
             >
               <Link
                 href="/create-event"
@@ -107,6 +117,11 @@ export default function Header() {
           </Authenticated>
 
           {/* Modals */}
+          <OnboardingModal
+            isOpen={showOnboarding}
+            onClose={handleOnboardingSkip}
+            onComplete={handleOnboardingComplete}
+          />
           <ModeToggle />
         </div>
       </div>

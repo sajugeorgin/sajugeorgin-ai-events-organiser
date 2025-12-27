@@ -26,7 +26,7 @@ const DynamicExplorePage = () => {
     ? parseLocationSlug(slug)
     : { city: null, state: null, isValid: false };
 
-  console.log("LOCATION VALID: ", city, state, isValid);
+  console.log("LOCATION SLUG:", city, state, isValid);
 
   // RETURN 404 NOT FOUND PAGE
   if (!isCategory && !isValid) {
